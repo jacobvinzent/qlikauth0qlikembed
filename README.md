@@ -2,7 +2,7 @@
 
 Configure Qlik Cloud with Auth0 as IDP and Oauth for web integration, with just a few clicks.
 
-![](images/integration.png)
+<img width="682" alt="integration" src="https://github.com/jacobvinzent/qlikauth0qlikembed/assets/6170297/a1885367-e538-4c8e-84c8-9be6febba5a9">
 
 ## Features
 This extension creates following:
