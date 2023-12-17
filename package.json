@@ -3,7 +3,7 @@
   "displayName": "qlik_auth0_qlik_embed",
   "description": "",
   "publisher": "vinzent",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.85.0"
   },
