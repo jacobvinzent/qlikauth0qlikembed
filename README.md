@@ -1,4 +1,4 @@
-# Automatic setup integration between Auth0, Qlik Sense and get a mashup using Qlik Embed ready to test!
+# Automatic setup integration between Auth0, Qlik Sense and get a mashup using Qlik-Embed ready to start testing!
 
 Configure Qlik Cloud with Auth0 as IDP and Oauth for web integration, with just a few clicks.
 
