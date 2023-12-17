@@ -3,7 +3,7 @@
   "displayName": "qlik_auth0_qlik_embed",
   "description": "",
   "publisher": "vinzent",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -20,6 +20,7 @@
       }
     ]
   },
+  "homepage": "https://github.com/jacobvinzent/qlikauth0qlikembed/blob/master/README.md",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
