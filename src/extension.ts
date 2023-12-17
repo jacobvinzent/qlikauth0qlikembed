@@ -28,8 +28,8 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerCommand('samples.quickInput', async () => {
 		//let files:string[] = await readDir(path.join(__dirname,'..','src','assets','html'));
 		if (_pathDirect.startsWith("/")) { _pathDirect = _pathDirect.substring(1, _pathDirect.length); };
-		await readAndCreateDirs(path.join(__dirname, '..', 'src', 'assets'), _pathDirect);
-		await copyFiles_(path.join(__dirname, '..', 'src', 'assets'), _pathDirect);
+		await readAndCreateDirs(path.join(__dirname, '..', 'assets'), _pathDirect);
+		await copyFiles_(path.join(__dirname, '..', 'assets'), _pathDirect);
 	
 
 			let QlikSenseURL: string | undefined = '';

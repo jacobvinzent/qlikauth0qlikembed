@@ -2,7 +2,8 @@
   "name": "qlikauth0qlikembed",
   "displayName": "qlik_auth0_qlik_embed",
   "description": "",
-  "version": "0.0.1",
+  "publisher": "vinzent",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.85.0"
   },

@@ -30,8 +30,8 @@ export async  function showQuickPick(Question: String, options: any) {
 export async function showInputBox(Question: String, isPassword: boolean) {
 	return new Promise<string>(async (resolve, reject) => {
 
-		const result = window.showInputBox({ value: "", prompt: `${Question}`, placeHolder: "", password: isPassword }).then((info) => {
-			if (info) {
+		const result = window.showInputBox({ value: "", prompt: `${Question}`, placeHolder: "", password: isPassword, ignoreFocusOut: true }).then((info) => {
+			if (typeof info !== "undefined") {
 				resolve(info);
 
 			} else {
