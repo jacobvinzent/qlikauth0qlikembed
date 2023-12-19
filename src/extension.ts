@@ -12,12 +12,19 @@ import { url } from 'inspector';
 import * as fs from 'fs';
 import * as path from 'path';
 import { changeVariables, copyFile_, copyFiles_, readAndCreateDirs, readDir } from './fileCopy';
+import { rejects } from 'assert';
 
 
 
 export function activate(context: ExtensionContext) {
 
+
+
+
 	const _path = vscode.workspace.workspaceFolders;
+
+	//if(typeof _path !== 'undefined') {
+
 	//const replaceObject:object = {};
 	type replaceObject_type = { [key: string]: string };
 	const replaceObject: replaceObject_type = {};
@@ -26,11 +33,15 @@ export function activate(context: ExtensionContext) {
 		_pathDirect = _path[0].uri.path;
 	}
 	context.subscriptions.push(commands.registerCommand('samples.quickInput', async () => {
-		//let files:string[] = await readDir(path.join(__dirname,'..','src','assets','html'));
-		if (_pathDirect.startsWith("/")) { _pathDirect = _pathDirect.substring(1, _pathDirect.length); };
-		await readAndCreateDirs(path.join(__dirname, '..', 'assets'), _pathDirect);
-		await copyFiles_(path.join(__dirname, '..', 'assets'), _pathDirect);
-	
+
+		if (typeof _path === 'undefined') {
+			
+				window.showInformationMessage('Please open a folder before running the extension',);
+
+
+		} else {
+			if (_pathDirect.startsWith("/")) { _pathDirect = _pathDirect.substring(1, _pathDirect.length); };
+			
 
 			let QlikSenseURL: string | undefined = '';
 			let QlikSenseToken: any | undefined = '';
@@ -50,7 +61,7 @@ export function activate(context: ExtensionContext) {
 
 			while (OAuthID === '') {
 				OAuthID = await showInputBox("Enter auth0 client_id", false);
-				
+
 
 			}
 
@@ -128,7 +139,7 @@ export function activate(context: ExtensionContext) {
 
 			replaceObject["<replace_OAUTH_clientID_From_Qlik>"] = Oauth_id;
 
-		
+
 			await PublishOAuthInQlikSense(QlikSenseToken, QlikSenseURL, Oauth_id);
 
 
@@ -140,13 +151,13 @@ export function activate(context: ExtensionContext) {
 			replaceObject["<replace_SHEETID_From_Qlik>"] = QlikSheet;
 			replaceObject["<replace_OBJECTID_From_Qlik>"] = QlikObject;
 
+			await readAndCreateDirs(path.join(__dirname, '..', 'assets'), _pathDirect);
+			await copyFiles_(path.join(__dirname, '..', 'assets'), _pathDirect);
+
+
 			let filesToChange: string[] = ['index.html', 'auth_config.json'];
 			await changeVariables(filesToChange, _pathDirect, JSON.stringify(replaceObject));
 
-
-		
-
+		}
 	}));
-
-
 } 

@@ -88,13 +88,6 @@
             ></qlik-embed>
           </div>
         </div>
-        <div id="analytics-chart-data" class="container">
-          <h1>Custom table from analytics/chart object data.</h1>
-          <h3><code>let chartData = objLayout.qHyperCube.qDataPages[0].qMatrix;</code></h3>
-          <div id="chart-data" class="viz">
-            
-          </div>
-        </div>
         <div id="field" class="container">
           <h1>qlik-embed field embeds a list box in the page.</h1>
           <div class="viz">
@@ -112,7 +105,7 @@
             <qlik-embed
               ui="analytics/sheet"
               app-id="<replace_APPID_From_Qlik>"
-              object-id="<replace_OBJECTID_From_Qlik>"
+              object-id="<replace_SHEETID_From_Qlik>"
             ></qlik-embed>
           </div>
         </div>
@@ -125,14 +118,21 @@
               id="sheet-change"
               ui="analytics/sheet"
               app-id="<replace_APPID_From_Qlik>"
-              object-id="<replace_OBJECTID_From_Qlik>"
+              object-id="<replace_SHEETID_From_Qlik>"
             ></qlik-embed>
+          </div>
+        </div>
+        <div id="analytics-chart-data" class="container">
+          <h1>Custom table from analytics/chart object data.</h1>
+          <h3><code>let chartData = objLayout.qHyperCube.qDataPages[0].qMatrix;</code></h3>
+          <div id="chart-data" class="viz" style="height: auto;">
           </div>
         </div>
       </div>
     </div>
   </body>
   <script type="">
+      const getSheets = async() => {
     const element = document.getElementById("sheet-change");
     const refApi = await element.getRefApi();
     const doc = await refApi.getDoc();
@@ -161,11 +161,13 @@
         console.log(selOption.value);
         element.setAttribute('object-id', selOption.value);
       }
-    });
+    })
+  };
 
   </script>
   <script type="module">
     //Get the data from the visualization in the page
+    const getData = async() => {
     console.log("trying to get some data");
     const element = document.getElementById("visualization");
     const refApi = await element.getRefApi();
@@ -199,5 +201,8 @@
       table.appendChild(tr);
     });
     container.appendChild(table);
+  }
+  getData();
+  getSheets();
   </script>
 </html>

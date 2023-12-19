@@ -29,6 +29,7 @@ export async function copyFile_(source: string, target: string) {
     return new Promise((resolve, reject) => {
         let directory = target.substring(0, target.lastIndexOf("\\"));
         if (!existsSync(directory)) {
+          
             mkdirSync(directory, { recursive: true });
         }
 

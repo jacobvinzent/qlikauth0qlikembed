@@ -28,13 +28,16 @@ This extension creates following:
 
 Now you are ready to run the extension, run the Setup Qlik integration from the Command Palette and paste the values in the requested order.
 
+## Important
 When you are done, log into you Qlik cloud tenant, go to the Management console and Identity providers. Validate the new created IdP.
 
 Go to the space with app and give the user from Auth0 full access to the space.
 
-Go back to VS code, open a terminal and run
-1. npm install
-2. npm run start
-3. Open a browser and enter the URL: http://localhost:3000
+Go back to VS code and 
+1. Open the index.html file and insert a field from your data model where it says: field-id="AccountDesc"
+2. Open a terminal
+3. run npm install
+4. run npm run start
+5. Open a browser and enter the URL: http://localhost:3000
 
 
