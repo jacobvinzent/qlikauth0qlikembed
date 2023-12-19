@@ -1,9 +1,10 @@
 {
   "name": "qlikauth0qlikembed",
-  "displayName": "qlik_auth0_qlik_embed",
+  "displayName": "Qlik cloud with auth0 and qlik_embed",
   "description": "",
+  "icon": "images/icon.png",
   "publisher": "vinzent",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "engines": {
     "vscode": "^1.85.0"
   },
