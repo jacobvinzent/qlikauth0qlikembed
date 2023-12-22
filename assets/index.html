@@ -58,18 +58,21 @@
           </p>
         </div>
         <div id="classic-app" class="container">
-          <h1>qlik-embed classic/app embeds the full Qlik Sense client in the page.</h1>
+          <h1>qlik-embed selections embeds the selections bar in the page.</h1>
           <div class="selections-bar">
             <qlik-embed
             ui="selections"
-            app-id="<replace_APPID_From_Qlik>">
+            app-id="<replace_APPID_From_Qlik>"
             </qlik-embed>
           </div>
+        </div>
+        <div id="classic-app" class="container">
+          <h1>qlik-embed classic/app embeds the full Qlik Sense client in the page.</h1>
           <div class="classic-app">
             <qlik-embed
               ui="classic/app"
               app-id="<replace_APPID_From_Qlik>"
-              sheet-id="<replace_SHEETID_From_Qlik>"
+              sheet-id="uyXmT"
               theme="breeze"
               ></qlik-embed>
           </div>
@@ -99,7 +102,7 @@
           </div>
         </div>
         <div id="analytics-sheet" class="container">
-          <h1>qlik-embed analytics/sheet embeds a list box in the page.</h1>
+          <h1>qlik-embed analytics/sheet without selections bar.</h1>
           <h3><i>Renders only nebula.js visualizations in sheets.</i></h3>
           <div class="classic-app">
             <qlik-embed

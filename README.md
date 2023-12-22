@@ -20,8 +20,8 @@ This extension creates following:
 ## Have following ready before you start
 1. Your API client_id, client_secret and audience from auth0 (can be found under applications, APIs, click on "Auth0 Management API" and select test. Here you find the details on a test curl command). Copy all three and paste it somewhere for later use.
 2. Go to applications, select "Auth0 Management API (Test Application)", click on APIs, Authorize the Auth0 Management API and click the arrow down on the record and select all scopes.
-3. Login to Qlik cloud, open an app which is published to a Shared or Managed space. Copy the app id and paste it somewhere for later use.
-4. Open a sheet and copy the sheet id and paste it somewhere for later use.
+3. Login to Qlik cloud, open an app which is published to a Shared or Managed space. Copy the app id and paste it somewhere for later use. (You can find the app ID for an analytics app by opening the app and observing the URL in your browser’s address bar. The guid for the app appears in the path between app and overview. Example: https://example.region.qlikcloud.com/sense/app/a51a902d-76a9-4c53-85d2-066b44240146/overview)
+4. Open a sheet and copy the sheet id and paste it somewhere for later use (You can find the sheet ID, by open the sheet and look for the id after /sheet/ in the URL).
 5. Right Qlik on an object, to get most out of the demo, don't select a KPI object. Right click on it, share and copy the id of object, paste it somewhere for later use.
 6. Get a developer token for you Qlik Cloud tenant or get the Oauth Client ID and Client Secret from your myqlik page. Remember to get the Oauth credentials for the same region as the tenant where that app exists. Copy the value(s) for later use.
 7. Copy your cloud tenant url and paste it somewhere for later use.
