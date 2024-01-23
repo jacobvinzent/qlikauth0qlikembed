@@ -85,7 +85,7 @@ export async function readAndCreateDirs(directory: string, target: string) {
 }
 
 export async function changeVariables(files: string[], mainDir: string, changes: string) {
-    return new Promise((reoslve, reject) => {
+    return new Promise((resolve, reject) => {
         files.forEach(element => {
             let file = path.join(mainDir, element);
             let data: string = readFileSync(file).toString();

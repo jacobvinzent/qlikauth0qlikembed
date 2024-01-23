@@ -29,15 +29,33 @@ This extension creates following:
 Now you are ready to run the extension, run the Setup Qlik integration from the Command Palette and paste the values in the requested order.
 
 ## Important
-When you are done, log into you Qlik cloud tenant, go to the Management console and Identity providers. Validate the new created IdP.
+The extension will take you to a website to validate your IdP, if you said No to go to the websitem then log into you Qlik cloud tenant, go to the Management console and Identity providers. Validate the new created IdP.
 
 Go to the space with app and give the user from Auth0 full access to the space.
 
 Go back to VS code and 
 1. Open the index.html file and insert a field from your data model where it says: field-id="AccountDesc"
-2. Open a terminal
-3. run npm install
-4. run npm run start
-5. Open a browser and enter the URL: http://localhost:3000
+2. The next step should run automatically, but if something goes wrong or you want to restart the server at a later stage, use following (bullet 3 and 4 only needs to be done first time)
+3. Open a terminal
+4. run npm install
+5. run npm run start
+6. Open a browser and enter the URL: http://localhost:3000
 
+## Config file
+If you want to reuse your variables for multiple tests, then you can add a file called config.json in the directory and enter the values here. Then you will not be prompted during the installation. All values needs to be filled. Format of config.json is: 
 
+```json
+{
+    "auth0 client_id":"",
+    "auth0 client_secret":"",
+    "auth0 audience URL":"https://xxxxx.eu.auth0.com/api/v2", 
+    "Qlik Cloud URL":"https://yourteant.region.qlikcloud.com",
+    "Use Oauth client_id and secret": true,
+    "Qlik Sense Oauth client_id": "Value only needed if Use Oauth client_id and secret is true",
+    "Qlik Sense Oauth client_secret": "Value only needed if Use Oauth client_id and secret is true",
+    "Qlik Sense developer key": "Value only needed if Use Oauth client_id and secret is false",
+    "Qlik Sense App Id": "",
+    "Qlik Sense sheet Id": "",
+    "Qlik Sense object Id": ""
+}
+```

@@ -14,12 +14,11 @@ import * as path from 'path';
 import { changeVariables, copyFile_, copyFiles_, readAndCreateDirs, readDir } from './fileCopy';
 import { rejects } from 'assert';
 
-
+ 
 
 export function activate(context: ExtensionContext) {
-
-
-
+	
+	
 
 	const _path = vscode.workspace.workspaceFolders;
 
@@ -43,7 +42,7 @@ export function activate(context: ExtensionContext) {
 			if (_pathDirect.startsWith("/")) { _pathDirect = _pathDirect.substring(1, _pathDirect.length); };
 			
 
-			let QlikSenseURL: string | undefined = '';
+/* 			let QlikSenseURL: string | undefined = '';
 			let QlikSenseToken: any | undefined = '';
 			let QlikSenseClientID: string | undefined = '';
 			let QlikSenseClientSecret: string | undefined = '';
@@ -57,7 +56,88 @@ export function activate(context: ExtensionContext) {
 			let QlikAppID: string = '';
 			let QlikSheet: string = '';
 			let QlikObject: string = '';
+ */
 
+			
+			let QlikSenseURL: string  = '';
+			let QlikSenseToken: any  = '';
+			let QlikSenseClientID: string = '';
+			let QlikSenseClientSecret: string  = '';
+			let QlikSenseAccessToken: string  = '';
+			let OAuthID: string  = '';
+			let OAuthSecret: string  = '';
+			let OAuthURL: string  = '';
+			let typeOfSenseAuth: any = '';
+			let OAuth0App_clientID: string = '';
+			let OAuth0App_clientSecret: string = '';
+			let QlikAppID: string = '';
+			let QlikSheet: string = '';
+			let QlikObject: string = '';
+
+			
+			if(fs.existsSync(_pathDirect + '/config.json')) {
+				var jsonFile = await vscode.workspace.fs.readFile(vscode.Uri.file(_pathDirect + '/config.json'));
+				var json:any = JSON.parse(jsonFile.toString());
+				
+				var properties =  [
+					"Use Oauth client_id and secret"
+				];
+
+				var res = testForEmptyJSONValue(properties,json);
+				if(res !== ""){
+					showError(res);
+					return;
+				} else {
+					
+				properties =  [
+					"auth0 client_id",
+					"auth0 client_secret",
+					"auth0 audience URL",
+					"Qlik Cloud URL",
+					"Qlik Sense App Id",
+					"Qlik Sense sheet Id",
+					"Qlik Sense object Id"
+				];
+					if(json['Use Oauth client_id and secret'] === true){
+						properties.push("Qlik Sense Oauth client_id");
+						properties.push("Qlik Sense Oauth client_secret");
+						
+					} else {
+						properties.push("Qlik Sense developer key");
+					}
+				}
+
+
+				var res = testForEmptyJSONValue(properties,json);
+				if(res !== ""){
+					showError(res);
+					return;
+				} else {
+					QlikSenseURL = json['Qlik Cloud URL'];
+
+					if(json['Use Oauth client_id and secret'] === true){
+						QlikSenseClientID =  json["Qlik Sense Oauth client_id"];
+						QlikSenseClientSecret =  json["Qlik Sense Oauth client_secret"];
+						typeOfSenseAuth = "Use Oauth client_id and secret";
+						
+					} else {
+						QlikSenseToken =  json["Qlik Sense developer key"];
+						typeOfSenseAuth = "Developer key";
+
+					}
+
+					OAuthID =json['auth0 client_id'];
+					OAuthSecret = json['auth0 client_secret'];
+					OAuthURL = json['auth0 audience URL'];
+					QlikAppID = json["Qlik Sense App Id"];
+					QlikSheet = json["Qlik Sense sheet Id"];
+					QlikObject = json["Qlik Sense object Id"];
+
+				}
+
+			}
+
+			
 
 			while (OAuthID === '') {
 				OAuthID = await showInputBox("Enter auth0 client_id", false);
@@ -80,7 +160,7 @@ export function activate(context: ExtensionContext) {
 			replaceObject["<replace_auth0_domain>"] = OAuthURL;
 
 			while (QlikSenseURL === '') {
-				QlikSenseURL = await showInputBox("Qlik Sense URL in following format https://tenantName.region.qlikcloud.com", false);
+				QlikSenseURL = await showInputBox("Qlik Cloud URL in following format https://tenantName.region.qlikcloud.com", false);
 
 			}
 
@@ -94,7 +174,9 @@ export function activate(context: ExtensionContext) {
 
 			replaceObject["<replace_auth0_clientID>"] = OAuth0App_clientID;
 
-			typeOfSenseAuth = await showQuickPick("Are you using a developer key or Oauth client_id and secret for Qlik Sense?", ['Developer key', 'Oauth credentials']);
+			if(typeOfSenseAuth === "") {
+				typeOfSenseAuth = await showQuickPick("Are you using a developer key or Oauth client_id and secret for Qlik Sense?", ['Developer key', 'Oauth credentials']);
+			}
 
 			if (typeOfSenseAuth !== "Developer key") {
 				while (QlikSenseClientID === '') {
@@ -143,10 +225,13 @@ export function activate(context: ExtensionContext) {
 			await PublishOAuthInQlikSense(QlikSenseToken, QlikSenseURL, Oauth_id);
 
 
-			let QlikIDPSetup = await createOauthIDPInQlikSense(QlikSenseToken, QlikSenseURL, qlikTenantID, OAuthURL,
+			let QlikIDPSetup:any = await createOauthIDPInQlikSense(QlikSenseToken, QlikSenseURL, qlikTenantID, OAuthURL,
 				OAuth0App_clientID, OAuth0App_clientSecret);
 
-			let j = '';
+			
+
+			//let QlikIDPValidateURL =  QlikSenseURL + '/console/idp-result/' + JSON.parse(QlikIDPSetup.toString()).id;
+			let QlikIDPValidateURL = QlikSenseURL + '/login?returnto=/console/idp-result/&idp_test=true&idp_id=' + JSON.parse(QlikIDPSetup.toString()).id;
 			replaceObject["<replace_APPID_From_Qlik>"] = QlikAppID;
 			replaceObject["<replace_SHEETID_From_Qlik>"] = QlikSheet;
 			replaceObject["<replace_OBJECTID_From_Qlik>"] = QlikObject;
@@ -157,6 +242,34 @@ export function activate(context: ExtensionContext) {
 
 			let filesToChange: string[] = ['index.html', 'auth_config.json'];
 			await changeVariables(filesToChange, _pathDirect, JSON.stringify(replaceObject));
+
+			var term = vscode.window.createTerminal('Qlik');
+			term.show();
+	 		term.sendText('npm install');
+			term.sendText('npm start run');
+
+			vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(QlikIDPValidateURL));
+
+			function testForEmptyJSONValue(properties:Array<string>, JSON:any) {
+				let returnVal = "";
+				properties.some(r => {
+					if(!JSON.hasOwnProperty(r) || JSON[r].toString().trim() === "") {
+						returnVal=  r + " doesn't have a valid value in config.json";
+						return true;
+					}
+				});
+
+				return returnVal;
+				
+				
+			}
+
+			function showError(error:string) {
+
+				window.showInformationMessage(error);
+				return;
+				//throw new Error('cancelled');
+			}
 
 		}
 	}));
