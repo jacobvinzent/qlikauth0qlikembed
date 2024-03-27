@@ -217,7 +217,7 @@ export function activate(context: ExtensionContext) {
 
 			let qlikTenantID: any = await getTenantID(QlikSenseToken, QlikSenseURL);
 			let Oauth_record: any = await createOAuthInQlikSense(QlikSenseToken, QlikSenseURL);
-			let Oauth_id = JSON.parse(Oauth_record).client_id;
+			let Oauth_id = JSON.parse(Oauth_record).clientId;
 
 			replaceObject["<replace_OAUTH_clientID_From_Qlik>"] = Oauth_id;
 
@@ -248,7 +248,9 @@ export function activate(context: ExtensionContext) {
 	 		term.sendText('npm install');
 			term.sendText('npm start run');
 
-			vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(QlikIDPValidateURL));
+			//vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(QlikIDPValidateURL));
+			//After skip verify is introduced
+			vscode.commands.executeCommand('vscode.open', QlikSenseURL);
 
 			function testForEmptyJSONValue(properties:Array<string>, JSON:any) {
 				let returnVal = "";
