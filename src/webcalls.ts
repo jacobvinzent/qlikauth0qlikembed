@@ -157,11 +157,11 @@ export async function createOAuthInQlikSense(token: String, qlikSenseURL: String
 		headers.append("Authorization", `Bearer ${token}`);
 
 		var raw = JSON.stringify({
-			"app_type": "spa",
-			"client_name": "Auto0 demo",
+			"appType": "spa",
+			"clientName": "Auto0 demo",
 			"description": "",
 			"allowedScopes":["user_default","admin.apps","admin.apps:export","admin.apps:read","admin.automations","admin.automations:read","admin.spaces","admin.spaces:read","apps","apps:export","apps:read","identity.email:read","automations","automations:read","identity.name:read","identity.picture:read","identity.subject:read","spaces.data","spaces.data:read","spaces.managed","spaces.managed:read","spaces.shared","spaces.shared:read"],
-			"redirect_uris": [
+			"redirectUris": [
 				"https://localhost:3000",
 				"http://localhost:3000"
 
