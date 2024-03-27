@@ -274,7 +274,7 @@ export async function getTenantID(token: String, qlikSenseURL: String) {
 
 export async function createOauthIDPInQlikSense(token: String, qlikSenseURL: String, tenantId: String, OAuthURL: String, OAuthAppClient: String, OAuthAppSecret: String) {
 	qlikSenseURL = cleanOAuthURL(qlikSenseURL,'');
-	let JSON_ = `{"provider":"auth0","interactive":true,"protocol":"OIDC","tenantIds":["${tenantId}"],"pendingOptions":{"discoveryUrl":"${OAuthURL}/.well-known/openid-configuration","clientId":"${OAuthAppClient}","clientSecret":"${OAuthAppSecret}","emailVerifiedAlwaysTrue":false,"blockOfflineAccessScope":false,"claimsMapping":{"sub":["sub"],"name":["name"],"groups":["groups"],"email":["email"],"client_id":["client_id"],"picture":["picture"]}}}`;
+	let JSON_ = `{"provider":"auth0","interactive":true,"protocol":"OIDC","tenantIds":["${tenantId}"],"skipVerify": true,"options":{"discoveryUrl":"${OAuthURL}/.well-known/openid-configuration","clientId":"${OAuthAppClient}","clientSecret":"${OAuthAppSecret}","emailVerifiedAlwaysTrue":false,"blockOfflineAccessScope":false,"claimsMapping":{"sub":["sub"],"name":["name"],"groups":["groups"],"email":["email"],"client_id":["client_id"],"picture":["picture"]}}}`;
 
 	return new Promise((resolve, reject) => {
 		var headers = new Headers();
