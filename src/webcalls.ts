@@ -203,7 +203,7 @@ export async function MakeOauthTrusted(token: String, qlikSenseURL: String, Oaut
 			{
 				"op": "replace",
 				"value": "trusted",
-				"path": "/consent_method"
+				"path": "/consentMethod"
 			}
 		]);
 
